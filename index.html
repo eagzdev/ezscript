@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<code>
+>ll: 'Lan+';
+<br>
+LANGUAGE-NAME; EZScript for Plugins (*plugin*);
+LANGUAGE-NAME; EZScript Classical (*nonplugin*);
+<br>
+COMMANDS:
+<br>
+nonplugin;
+{1}; >addbutton: 'for all users? (yes/no)', 'url (skip if type is success)', 'type (success, link)', 'text', 'emoji (skip if not need)';
+{2};>sendmessage: 'Channel ID (skip if u want current channel)', 'message (supports code)';
+{3}; >addreactions: 'reaction1', 'reaction2', '...', '...'
+{4}; >setvar(USER, SERVER, GLOBAL): 'new value', 'variable name';
+{5}; >getvar(USER, SERVER, GLOBAL): 'variable name';
+{6}; >bdscript_command: '$(command) (support code)';
+{7}; >djs_command: 'command (support code)';
+{8}; >dpy_command: 'command (support code)';
+{9}; >then: 'command (support code)';
+{10}; >embed: 'authoricon', 'author', 'title', 'description', 'footer', 'thumbnail', 'footericon' -+ you can skip some fields.
+{11}; >ll (or loadlanguage): 'language name', 'lurl'; -+ if language is lan+, lurl not need. (lurl - language code url)
+{12}; >wc: 'webhook name', 'webhook avatar'; -+ create webhook
+{13}; >ws: 'webhook url', 'message'; -+ send webhook message
+{14}; >gwu: 'full webhook name'; -+ return url of webhook by name
+{15}; >dm: 'userid', 'message (support code)';
+<br>
+plugin;
+{1.2}; >createChannel: 'name', 'type';
+{2.2}; >createrole: 'name', 'color', 'perm1 (+, -)', 'perm2', '...', '...';
+{3.2}; >whenplugininjected: 'language', 'lurl', 'code';
+{4.2}; >dm_injector: 'message (support code)';
+<br>
+CODE;
+1 = discord.bot.message.addbutton 1=1, 2=2, 3=3, 4=4, 5=emoji,
+2 = discord.bot.message.send 1=channelid, 2=message,
+3 = discord.bot.message.reactions.add:"FIELDS",
+4 = discord.inbot.variable.set="field1", "field2", "field3",
+5 = discord.inbot.variable="field1", "field2",
+6 = language."https://botdesignerfordiscord.com/". code="field1"
+7 = global.discord.language.javascript. code="field1"
+8 = global.discord.language.python. code="field1"
+9 = lanp.then 1=1
+10 = discord.bot.advancedmessage.embed ai=field1, a=field2, t=field3, d=field4, f=field5, th=field6, fi=field7
+11 = language."field1"."field2". code="field3"
+12 = discord.server.channel.webhook.create field1=name, field2=avatar
+13 = discord.server.channel.webhook.message.send field1=url, field2=message --allow-embed--
+14 = discord.server.channel.webhook field=name
+15 = discord.message.send field1=USERID, field2=message --allow-embed--
+<br>
+1.2 = discord.server.channel.create field1=name field2=type
+2.2 = discord.server.roles.create field1=name field2=color get(+;-).ADDTO.field(3-999)=perm
+3.2 = custom_whenpluginenjected(.WHEN.discord.bot.command(>whenplugininjected).USED.) field1=language, field2=lurl, field3=code
+4.2 = discord.message.send .AUTHORID. field1=message
+<br>
+}}
+</code>
